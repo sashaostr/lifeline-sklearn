@@ -31,7 +31,7 @@ coxph_surv_ppl.fit(data_train, y=data_train)
 
 #use pipeline to predict expected lifetime
 exp_lifetime = coxph_surv_ppl.predict(data_test[0:1])
-print 'expected lifetime: ' + str(exp_lifetime) 
+print('expected lifetime: ' + str(exp_lifetime))
 
 #or you can extract the model from the pipeline to access more methods
 coxmodel = coxph_surv_ppl.named_steps['coxphfittermodel'].estimator

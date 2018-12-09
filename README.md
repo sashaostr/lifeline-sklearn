@@ -10,9 +10,10 @@ pip install git+https://github.com/sashaostr/sklearn-lifelines.git
 # Example
 ```python
 import lifelines
+import lifelines.datasets
 from sklearn_lifelines.estimators_wrappers import CoxPHFitterModel
 from sklearn.pipeline import make_pipeline
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from patsylearn import PatsyTransformer
 
 data = lifelines.datasets.load_dd()

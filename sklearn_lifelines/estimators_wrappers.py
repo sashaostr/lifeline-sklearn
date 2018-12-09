@@ -4,7 +4,7 @@ from sklearn.base import BaseEstimator
 from sklearn.utils.metaestimators import if_delegate_has_method
 
 class CoxPHFitterModel(BaseEstimator):
-    def __init__(self, duration_column=None, event_col=None, initial_beta=None, include_likelihood=False, strata=None, alpha=0.95, tie_method='Efron', penalizer=0.0, **kwargs):
+    def __init__(self, duration_column=None, event_col=None, initial_beta=None, strata=None, alpha=0.95, tie_method='Efron', penalizer=0.0, **kwargs):
         self.alpha = alpha
         self.tie_method = tie_method
         self.penalizer = penalizer
@@ -13,7 +13,6 @@ class CoxPHFitterModel(BaseEstimator):
         self.event_col = event_col
 
         self.initial_beta = initial_beta
-        self.include_likelihood = include_likelihood
         self.strata = strata
 
 
@@ -26,7 +25,7 @@ class CoxPHFitterModel(BaseEstimator):
         params = self.get_params()
         est = CoxPHFitter(**params)
 
-        est.fit(X_, duration_col=self.duration_column, event_col=self.event_col, initial_beta=self.initial_beta, include_likelihood=self.include_likelihood, strata=self.strata, **fit_params)
+        est.fit(X_, duration_col=self.duration_column, event_col=self.event_col, initial_beta=self.initial_beta, strata=self.strata, **fit_params)
         self.estimator = est
         return self
 

@@ -4,10 +4,9 @@ from sklearn.base import BaseEstimator
 from sklearn.utils.metaestimators import if_delegate_has_method
 
 class CoxPHFitterModel(BaseEstimator):
-    def __init__(self, duration_column=None, event_col=None, initial_beta=None, include_likelihood=False, strata=None, alpha=0.95, tie_method='Efron', normalize=True, penalizer=0.0, **kwargs):
+    def __init__(self, duration_column=None, event_col=None, initial_beta=None, include_likelihood=False, strata=None, alpha=0.95, tie_method='Efron', penalizer=0.0, **kwargs):
         self.alpha = alpha
         self.tie_method = tie_method
-        self.normalize = normalize
         self.penalizer = penalizer
 
         self.duration_column = duration_column
@@ -36,7 +35,7 @@ class CoxPHFitterModel(BaseEstimator):
         return self.estimator.predict_expectation(X)[0].values[0]
 
     def get_params(self, deep=True):
-        return {"alpha": self.alpha, "tie_method": self.tie_method, "normalize": self.normalize, "penalizer": self.penalizer}
+        return {"alpha": self.alpha, "tie_method": self.tie_method, "penalizer": self.penalizer}
 
 
 class AalenAdditiveFitterModel(BaseEstimator):

@@ -1,7 +1,6 @@
 from lifelines import AalenAdditiveFitter
 from lifelines import CoxPHFitter
 from sklearn.base import BaseEstimator
-from sklearn.utils.metaestimators import if_delegate_has_method
 
 class CoxPHFitterModel(BaseEstimator):
     def __init__(self, duration_column=None, event_col=None, initial_beta=None, strata=None, alpha=0.95, tie_method='Efron', penalizer=0.0, **kwargs):
@@ -29,7 +28,6 @@ class CoxPHFitterModel(BaseEstimator):
         self.estimator = est
         return self
 
-    @if_delegate_has_method(delegate='estimator')
     def predict(self, X):
         return self.estimator.predict_expectation(X)[0].values[0]
 
@@ -62,7 +60,6 @@ class AalenAdditiveFitterModel(BaseEstimator):
         self.estimator = est
         return self
 
-    @if_delegate_has_method(delegate='estimator')
     def predict(self, X):
         return self.estimator.predict_expectation(X)[0].values[0]
 

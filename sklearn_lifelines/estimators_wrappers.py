@@ -1,6 +1,6 @@
 from lifelines import AalenAdditiveFitter
 from lifelines import CoxPHFitter
-from sklearn.pipeline import BaseEstimator
+from sklearn.base import BaseEstimator
 from sklearn.utils.metaestimators import if_delegate_has_method
 
 class CoxPHFitterModel(BaseEstimator):

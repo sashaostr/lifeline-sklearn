@@ -9,12 +9,15 @@ pip install git+https://github.com/sashaostr/sklearn-lifelines.git
 
 # Example
 ```python
-import lifelines
 import lifelines.datasets
-from sklearn_lifelines.estimators_wrappers import CoxPHFitterModel
-from sklearn.pipeline import make_pipeline
-from sklearn.model_selection import train_test_split
+import numpy
 from patsylearn import PatsyTransformer
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn_lifelines.estimators_wrappers import CoxPHFitterModel
+
+# Set seed for reproducible results
+numpy.random.seed(42)
 
 data = lifelines.datasets.load_dd()
 
@@ -39,24 +42,24 @@ coxmodel.print_summary()
 ```
 
 ```
-> expected lifetime: 4.44003472211
->
-> n=1356, number of events=1094
->
->                                 coef  exp(coef)  se(coef)          z         p  lower 0.95  upper 0.95     
->un_continent_name[Africa]    6.664e+00  7.834e+02       nan        nan       nan         nan         nan     
->un_continent_name[Americas]  7.375e+00  1.596e+03       nan        nan       nan         nan         nan     
->un_continent_name[Asia]      7.171e+00  1.301e+03       nan        nan       nan         nan         nan     
->un_continent_name[Europe]    8.190e+00  3.605e+03       nan        nan       nan         nan         nan     
->un_continent_name[Oceania]   4.183e+00  6.554e+01       nan        nan       nan         nan         nan     
->regime[T.Military Dict]      8.758e-02  1.092e+00 3.972e-02  2.205e+00 2.747e-02   9.707e-03   1.655e-01    *
->regime[T.Mixed Dem]          4.137e-01  1.512e+00 4.480e-02  9.235e+00 2.588e-20   3.259e-01   5.015e-01  ***
->regime[T.Monarchy]          -1.924e-01  8.250e-01 4.860e-02 -3.959e+00 7.539e-05  -2.877e-01  -9.712e-02  ***
->regime[T.Parliamentary Dem]  3.740e-01  1.453e+00 4.931e-02  7.584e+00 3.356e-14   2.773e-01   4.706e-01  ***
->regime[T.Presidential Dem]   3.440e-01  1.411e+00 4.660e-02  7.383e+00 1.546e-13   2.527e-01   4.354e-01  ***
->start_year                  -4.382e-02  9.571e-01 3.351e-02 -1.308e+00 1.910e-01  -1.095e-01   2.188e-02     
->
->Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
->
->Concordance = 0.654
+> expected lifetime: 5.0757889745799805
+> n=1356, number of events=1093
+> 
+>                                 coef  exp(coef)     se(coef)       z      p    lower 0.95   upper 0.95     
+> un_continent_name[Africa]   -54.2263     0.0000 2723460.7001 -0.0000 1.0000 -5337939.1118 5337830.6593     
+> un_continent_name[Americas] -54.0287     0.0000 2723460.7001 -0.0000 1.0000 -5337938.9142 5337830.8568     
+> un_continent_name[Asia]     -53.9316     0.0000 2723460.7001 -0.0000 1.0000 -5337938.8172 5337830.9539     
+> un_continent_name[Europe]   -53.7841     0.0000 2723460.7001 -0.0000 1.0000 -5337938.6696 5337831.1014     
+> un_continent_name[Oceania]  -53.9123     0.0000 2723460.7001 -0.0000 1.0000 -5337938.7978 5337830.9732     
+> regime[T.Military Dict]       0.2687     1.3083       0.1177  2.2836 0.0224        0.0381       0.4994    *
+> regime[T.Mixed Dem]           1.2298     3.4204       0.1260  9.7610 0.0000        0.9828       1.4767  ***
+> regime[T.Monarchy]           -1.0500     0.3499       0.2524 -4.1600 0.0000       -1.5448      -0.5553  ***
+> regime[T.Parliamentary Dem]   0.7967     2.2181       0.1064  7.4869 0.0000        0.5881       1.0052  ***
+> regime[T.Presidential Dem]    1.0356     2.8168       0.1218  8.5012 0.0000        0.7968       1.2744  ***
+> start_year                   -0.0020     0.9980       0.0018 -1.1170 0.2640       -0.0055       0.0015     
+> ---
+> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+> 
+> Concordance = 0.648
+> Likelihood ratio test = 293.767 on 11 df, p=0.00000
 ```

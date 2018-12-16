@@ -21,8 +21,7 @@ class CoxPHFitterModel(BaseEstimator):
         if self.event_col is not None:
             X_[self.event_col] = y[self.event_col]
 
-        params = self.get_params()
-        est = CoxPHFitter(**params)
+        est = CoxPHFitter(alpha=self.alpha, tie_method=self.tie_method, penalizer=self.penalizer)
 
         est.fit(X_, duration_col=self.duration_column, event_col=self.event_col, initial_beta=self.initial_beta, strata=self.strata, **fit_params)
         self.estimator = est
@@ -30,9 +29,6 @@ class CoxPHFitterModel(BaseEstimator):
 
     def predict(self, X):
         return self.estimator.predict_expectation(X)[0].values[0]
-
-    def get_params(self, deep=True):
-        return {"alpha": self.alpha, "tie_method": self.tie_method, "penalizer": self.penalizer}
 
 
 class AalenAdditiveFitterModel(BaseEstimator):
@@ -54,16 +50,11 @@ class AalenAdditiveFitterModel(BaseEstimator):
         if self.event_col is not None:
             X_[self.event_col] = y[self.event_col]
 
-        params = self.get_params()
-        est = AalenAdditiveFitter(**params)
+        est = AalenAdditiveFitter(fit_intercept=self.fit_intercept, alpha=self.alpha, coef_penalizer=self.coef_penalizer,
+                smoothing_penalizer=self.smoothing_penalizer)
         est.fit(X_, duration_col=self.duration_column, event_col=self.event_col, timeline=self.timeline, id_col = self.id_col, **fit_params)
         self.estimator = est
         return self
 
     def predict(self, X):
         return self.estimator.predict_expectation(X)[0].values[0]
-
-    def get_params(self, deep=True):
-        return {"fit_intercept": self.fit_intercept, "alpha": self.alpha, "coef_penalizer": self.coef_penalizer, "smoothing_penalizer": self.smoothing_penalizer}
-
-

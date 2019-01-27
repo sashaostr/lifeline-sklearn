@@ -1,11 +1,17 @@
 import lifelines
-from sklearn_lifelines.estimators_wrappers import CoxPHFitterModel
-from sklearn.pipeline import make_pipeline
-from sklearn.cross_validation import train_test_split
+import lifelines.datasets
+import numpy
 from patsylearn import PatsyTransformer
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+
+from sklearn_lifelines.estimators_wrappers import CoxPHFitterModel
 
 
 def test_coxph_model():
+
+    # Set seed for reproducible results
+    numpy.random.seed(42)
 
     data = lifelines.datasets.load_dd()
 

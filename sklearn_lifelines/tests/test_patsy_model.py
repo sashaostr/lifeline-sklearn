@@ -17,7 +17,7 @@ def test_coxph_model():
 
     # create sklearn pipeline
     coxph_surv_ppl = make_pipeline(PatsyTransformer('un_continent_name + regime + start_year -1', return_type='dataframe'),
-                                  CoxPHFitterModel(duration_column='duration',event_col='observed'))
+                                  CoxPHFitterModel(duration_column='duration',event_col='observed',penalizer=0.001))
 
     #split data to train and test
     data_train, data_test = train_test_split(data)

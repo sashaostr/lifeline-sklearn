@@ -24,7 +24,7 @@ data = lifelines.datasets.load_dd()
 # create sklearn pipeline
 coxph_surv_ppl = make_pipeline(PatsyTransformer('un_continent_name + regime + start_year -1', \
                                               return_type='dataframe'),
-                              CoxPHFitterModel(duration_column='duration',event_col='observed'))
+                              CoxPHFitterModel(duration_column='duration',event_col='observed',penalizer=0.001))
 
 #split data to train and test
 data_train, data_test = train_test_split(data)
@@ -42,24 +42,29 @@ coxmodel.print_summary()
 ```
 
 ```
-> expected lifetime: 5.0757889745799805
-> n=1356, number of events=1093
-> 
->                                 coef  exp(coef)     se(coef)       z      p    lower 0.95   upper 0.95     
-> un_continent_name[Africa]   -54.2263     0.0000 2723460.7001 -0.0000 1.0000 -5337939.1118 5337830.6593     
-> un_continent_name[Americas] -54.0287     0.0000 2723460.7001 -0.0000 1.0000 -5337938.9142 5337830.8568     
-> un_continent_name[Asia]     -53.9316     0.0000 2723460.7001 -0.0000 1.0000 -5337938.8172 5337830.9539     
-> un_continent_name[Europe]   -53.7841     0.0000 2723460.7001 -0.0000 1.0000 -5337938.6696 5337831.1014     
-> un_continent_name[Oceania]  -53.9123     0.0000 2723460.7001 -0.0000 1.0000 -5337938.7978 5337830.9732     
-> regime[T.Military Dict]       0.2687     1.3083       0.1177  2.2836 0.0224        0.0381       0.4994    *
-> regime[T.Mixed Dem]           1.2298     3.4204       0.1260  9.7610 0.0000        0.9828       1.4767  ***
-> regime[T.Monarchy]           -1.0500     0.3499       0.2524 -4.1600 0.0000       -1.5448      -0.5553  ***
-> regime[T.Parliamentary Dem]   0.7967     2.2181       0.1064  7.4869 0.0000        0.5881       1.0052  ***
-> regime[T.Presidential Dem]    1.0356     2.8168       0.1218  8.5012 0.0000        0.7968       1.2744  ***
-> start_year                   -0.0020     0.9980       0.0018 -1.1170 0.2640       -0.0055       0.0015     
+> expected lifetime: 5.075786636895757
+> <lifelines.CoxPHFitter: fitted with 1356 observations, 263 censored>
+>       duration col = 'duration'
+>          event col = 'observed'
+> number of subjects = 1356
+>   number of events = 1093
+>     log-likelihood = -6801.67
+>   time fit was run = 2019-01-27 22:01:35 UTC
 > ---
-> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-> 
-> Concordance = 0.648
-> Likelihood ratio test = 293.767 on 11 df, p=0.00000
+>                              coef  exp(coef)  se(coef)     z      p  log(p)  lower 0.95  upper 0.95     
+> un_continent_name[Africa]   -0.26       0.77     36.18 -0.01   0.99   -0.01      -71.17       70.65     
+> un_continent_name[Americas] -0.06       0.94     36.18 -0.00   1.00   -0.00      -70.97       70.84     
+> un_continent_name[Asia]      0.03       1.03     36.18  0.00   1.00   -0.00      -70.88       70.94     
+> un_continent_name[Europe]    0.18       1.20     36.18  0.00   1.00   -0.00      -70.73       71.09     
+> un_continent_name[Oceania]   0.05       1.05     36.18  0.00   1.00   -0.00      -70.86       70.96     
+> regime[T.Military Dict]      0.27       1.31      0.12  2.28   0.02   -3.80        0.04        0.50    .
+> regime[T.Mixed Dem]          1.23       3.42      0.13  9.76 <0.005  -50.15        0.98        1.48  ***
+> regime[T.Monarchy]          -1.05       0.35      0.25 -4.16 <0.005  -10.36       -1.54       -0.56  ***
+> regime[T.Parliamentary Dem]  0.80       2.22      0.11  7.49 <0.005  -30.28        0.59        1.01  ***
+> regime[T.Presidential Dem]   1.04       2.82      0.12  8.50 <0.005  -38.51        0.80        1.27  ***
+> start_year                  -0.00       1.00      0.00 -1.12   0.26   -1.33       -0.01        0.00     
+> ---
+> Signif. codes: 0 '***' 0.0001 '**' 0.001 '*' 0.01 '.' 0.05 ' ' 1
+> Concordance = 0.65
+> Likelihood ratio test = 293.77 on 11 df, log(p)=-128.36
 ```
